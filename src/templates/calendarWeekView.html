@@ -69,7 +69,9 @@
               mwl-resizable="eventRow.event.resizable === true && eventRow.event.endsAt && !vm.showTimes"
               resize-edges="{left: true, right: true}"
               on-resize-end="vm.weekResized(eventRow.event, edge, x / vm.dayColumnDimensions.width)">
+
               <strong ng-bind="(eventRow.event.tempStartsAt || eventRow.event.startsAt) | calendarDate:'time':true" ng-show="vm.showTimes"></strong>
+
               <a
                 href="javascript:;"
                 ng-click="vm.onEventClick({calendarEvent: eventRow.event})"
@@ -79,6 +81,17 @@
                 tooltip-placement="left"
                 tooltip-append-to-body="true">
               </a>
+
+              <a
+                href="javascript:;"
+                class="event-item-action"
+                ng-repeat="action in eventRow.event.actions track by $index"
+                ng-if="action.weekView"
+                ng-class="action.cssClass"
+                ng-bind-html="action.label | calendarTrustAsHtml"
+                ng-click="action.onClick({calendarEvent: eventRow.event})">
+              </a>
+
             </div>
           </div>
         </div>
